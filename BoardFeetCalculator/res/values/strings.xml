@@ -3,6 +3,6 @@
     <string name="app_name">BoardFeetCalculator</string>
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
-    <string name="title_activity_calculator">Calculator</string>
+    <string name="title_activity_calculator">Board Feet Calculator</string>
 
 </resources>

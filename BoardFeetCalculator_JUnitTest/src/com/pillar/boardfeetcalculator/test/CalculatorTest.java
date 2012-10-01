@@ -18,4 +18,9 @@ public class CalculatorTest extends ActivityInstrumentationTestCase2<Calculator>
 	public void testExample() {
 		assertTrue(true);
 	}
+	
+	public void testTitleIsBoardFeetCalculator() {
+		String title = (String) getActivity().getTitle();
+		assertEquals("Board Feet Calculator", title);
+	}
 }
