@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Toast;
 
 
 public class Calculator extends Activity {
@@ -31,5 +33,20 @@ public class Calculator extends Activity {
     public void onResume() {
     	super.onResume();
     	Log.v(TAG, "onResume()" );
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+      switch (item.getItemId()) {
+      case R.id.menu_settings:
+        Toast.makeText(this, "Settings Menu Selected", Toast.LENGTH_SHORT)
+            .show();
+        break;
+
+      default:
+        break;
+      }
+
+      return true;
     }
 }
