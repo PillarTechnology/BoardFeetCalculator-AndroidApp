@@ -44,7 +44,7 @@ public class Calculator extends Activity {
         break;
 
       default:
-        break;
+        return super.onOptionsItemSelected(item);
       }
 
       return true;
