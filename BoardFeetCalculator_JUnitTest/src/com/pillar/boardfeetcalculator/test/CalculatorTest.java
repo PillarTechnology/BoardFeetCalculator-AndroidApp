@@ -2,6 +2,7 @@ package com.pillar.boardfeetcalculator.test;
 
 import com.pillar.boardfeetcalculator.Calculator;
 import android.test.ActivityInstrumentationTestCase2;
+import android.text.Editable;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -35,6 +36,22 @@ public class CalculatorTest extends ActivityInstrumentationTestCase2<Calculator>
 	public void testCircumferenceInputAreaExists() { 
 		EditText editCircumference = (EditText) MainActivity.findViewById(com.pillar.boardfeetcalculator.R.id.editCircumference);
 		assertNotNull(editCircumference);
+	}
+	
+	public void testCircumferenceCanRecieveInput() {
+		try {
+			runTestOnUiThread(new Runnable() {
+			     public void run() {
+			 		EditText editCircumference = (EditText) MainActivity.findViewById(com.pillar.boardfeetcalculator.R.id.editCircumference);
+					assertNotNull(editCircumference);
+			 		editCircumference.setText("New text");
+					Editable text = editCircumference.getText();
+					assertEquals("Cannot set editCircumference text", new String("New text"), text.toString());
+			    }
+			});
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void testResultAreaExists() {
