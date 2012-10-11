@@ -1,8 +1,10 @@
 <resources>
 
     <string name="app_name">BoardFeetCalculator</string>
-    <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
     <string name="title_activity_calculator">Board Feet Calculator</string>
+    <string name="label_height">Tree Height</string>
+    <string name="label_circumference">Tree Circumference</string>
+    <string name="label_superfluous">TextView</string>
 
 </resources>
