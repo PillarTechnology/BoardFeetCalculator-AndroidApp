@@ -58,4 +58,11 @@ public class CalculatorTest extends ActivityInstrumentationTestCase2<Calculator>
 		TextView textResult = (TextView) MainActivity.findViewById(com.pillar.boardfeetcalculator.R.id.textResult);
 		assertNotNull(textResult);
 	}
+	
+	public void testDatabaseExists() {
+		String[] databaseList = MainActivity.databaseList();
+		assertEquals(2, databaseList.length);
+		assertEquals("Forest-journal", databaseList[0]);
+		assertEquals("Forest", databaseList[1]);
+	}
 }

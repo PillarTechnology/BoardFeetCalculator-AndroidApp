@@ -4,5 +4,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
     <string name="title_activity_calculator">Board Feet Calculator</string>
+    <string name="height_hint">Height</string>
+    <string name="circumference_hint">Circumference</string>
 
 </resources>

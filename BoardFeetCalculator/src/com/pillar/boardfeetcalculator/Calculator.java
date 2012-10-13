@@ -10,11 +10,16 @@ import android.widget.Toast;
 
 public class Calculator extends Activity {
 	private static final String TAG = "Calculator";
+	
+	private TreeDatabaseHelper databaseHelper;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calculator);
+        databaseHelper = new TreeDatabaseHelper(this);
+        databaseHelper.getWritableDatabase();
+        databaseHelper.close();
     }
 
     @Override

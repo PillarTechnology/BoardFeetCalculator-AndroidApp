@@ -10,6 +10,8 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="27dp"
+        android:inputType="numberDecimal"
+        android:hint="@string/height_hint"
         android:ems="10" >
 
         <requestFocus />
@@ -22,6 +24,8 @@
         android:layout_below="@+id/editHeight"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="58dp"
+        android:inputType="numberDecimal"
+        android:hint="@string/circumference_hint"
         android:ems="10" />
 
     <TextView
@@ -30,7 +34,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="82dp"
-        android:text="TextView" />
+        android:layout_marginBottom="82dp" />
     
 </RelativeLayout>
