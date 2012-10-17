@@ -2,7 +2,6 @@ package com.pillar.boardfeetcalculator.test;
 
 import com.pillar.boardfeetcalculator.Calculator;
 import android.test.ActivityInstrumentationTestCase2;
-import android.text.Editable;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -41,11 +40,11 @@ public class CalculatorTest extends ActivityInstrumentationTestCase2<Calculator>
 	public void testCircumferenceCanRecieveInput() throws Throwable {
 		runTestOnUiThread(new Runnable() {
 		     public void run() {
+		    	String expectedText = "New text";
 		 		EditText editCircumference = (EditText) MainActivity.findViewById(com.pillar.boardfeetcalculator.R.id.editCircumference);
-				assertNotNull(editCircumference);
-		 		editCircumference.setText("New text");
-				Editable text = editCircumference.getText();
-				assertEquals("Cannot set editCircumference text", new String("New text"), text.toString());
+
+		 		editCircumference.setText(expectedText);
+				assertEquals("Cannot set editCircumference text", expectedText, editCircumference.getText().toString());
 		    }
 		});
 	}
@@ -54,11 +53,5 @@ public class CalculatorTest extends ActivityInstrumentationTestCase2<Calculator>
 		TextView textResult = (TextView) MainActivity.findViewById(com.pillar.boardfeetcalculator.R.id.textResult);
 		assertNotNull(textResult);
 	}
-	
-	public void testDatabaseExists() {
-		String[] databaseList = MainActivity.databaseList();
-		assertEquals(2, databaseList.length);
-		assertEquals("Forest-journal", databaseList[0]);
-		assertEquals("Forest", databaseList[1]);
-	}
+
 }
