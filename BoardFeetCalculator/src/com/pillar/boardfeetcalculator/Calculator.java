@@ -1,20 +1,20 @@
 package com.pillar.boardfeetcalculator;
 
+import com.pillar.android.ToastFactory;
+
 import android.os.Bundle;
 import android.app.Activity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
-
-public class Calculator extends Activity {
-	private static final String TAG = "Calculator";
+public class Calculator extends Activity {	
+	private CalculatorOptionDelegate optionDelegate;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calculator);
+        optionDelegate = new CalculatorOptionDelegate(new ToastFactory(), this);
     }
 
     @Override
@@ -24,29 +24,7 @@ public class Calculator extends Activity {
     }
     
     @Override
-    public void onPause() {
-    	super.onPause();
-    	Log.v(TAG, "onPause()" );
-    }
-    
-    @Override
-    public void onResume() {
-    	super.onResume();
-    	Log.v(TAG, "onResume()" );
-    }
-    
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-      switch (item.getItemId()) {
-      case R.id.menu_settings:
-        Toast.makeText(this, "Settings Menu Selected", Toast.LENGTH_SHORT)
-            .show();
-        break;
-
-      default:
-        return super.onOptionsItemSelected(item);
-      }
-
-      return true;
+      return optionDelegate.onOptionItemSelected(item) ? true : super.onOptionsItemSelected(item);
     }
 }

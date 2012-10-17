@@ -2,7 +2,6 @@ package com.pillar.boardfeetcalculator.test;
 
 import com.pillar.boardfeetcalculator.Calculator;
 import android.test.ActivityInstrumentationTestCase2;
-import android.text.Editable;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -38,24 +37,21 @@ public class CalculatorTest extends ActivityInstrumentationTestCase2<Calculator>
 		assertNotNull(editCircumference);
 	}
 	
-	public void testCircumferenceCanRecieveInput() {
-		try {
-			runTestOnUiThread(new Runnable() {
-			     public void run() {
-			 		EditText editCircumference = (EditText) MainActivity.findViewById(com.pillar.boardfeetcalculator.R.id.editCircumference);
-					assertNotNull(editCircumference);
-			 		editCircumference.setText("New text");
-					Editable text = editCircumference.getText();
-					assertEquals("Cannot set editCircumference text", new String("New text"), text.toString());
-			    }
-			});
-		} catch (Throwable e) {
-			e.printStackTrace();
-		}
+	public void testCircumferenceCanRecieveInput() throws Throwable {
+		runTestOnUiThread(new Runnable() {
+		     public void run() {
+		    	String expectedText = "New text";
+		 		EditText editCircumference = (EditText) MainActivity.findViewById(com.pillar.boardfeetcalculator.R.id.editCircumference);
+
+		 		editCircumference.setText(expectedText);
+				assertEquals("Cannot set editCircumference text", expectedText, editCircumference.getText().toString());
+		    }
+		});
 	}
 	
 	public void testResultAreaExists() {
 		TextView textResult = (TextView) MainActivity.findViewById(com.pillar.boardfeetcalculator.R.id.textResult);
 		assertNotNull(textResult);
 	}
+
 }
