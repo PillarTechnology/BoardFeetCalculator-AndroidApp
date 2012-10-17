@@ -1,2 +1,3 @@
 #put bin/ filter here because bin folder is wiped on a build
 bin/
+libs/
