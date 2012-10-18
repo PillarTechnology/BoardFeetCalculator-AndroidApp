@@ -1,6 +1,6 @@
 package com.pillar.boardfeetcalculator;
 
-import com.pillar.android.ToastFactory;
+import com.pillar.android.IntentFactory;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -14,7 +14,7 @@ public class Calculator extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calculator);
-        optionDelegate = new CalculatorOptionDelegate(new ToastFactory(), this);
+        optionDelegate = new CalculatorOptionDelegate(new IntentFactory(), this);
     }
 
     @Override

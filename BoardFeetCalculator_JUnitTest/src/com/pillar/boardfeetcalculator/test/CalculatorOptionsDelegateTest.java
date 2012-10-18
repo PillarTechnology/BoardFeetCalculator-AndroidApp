@@ -1,11 +1,12 @@
 package com.pillar.boardfeetcalculator.test;
 
+import android.content.Intent;
 import android.view.MenuItem;
-import android.widget.Toast;
 
-import com.pillar.android.ToastFactory;
+import com.pillar.android.IntentFactory;
 import com.pillar.boardfeetcalculator.Calculator;
 import com.pillar.boardfeetcalculator.CalculatorOptionDelegate;
+import com.pillar.boardfeetcalculator.CalculatorSettings;
 import com.pillar.boardfeetcalculator.R;
 
 import junit.framework.TestCase;
@@ -13,14 +14,14 @@ import static org.mockito.Mockito.*;
 
 public class CalculatorOptionsDelegateTest extends TestCase {
 	
-	private ToastFactory factory;
+	private IntentFactory factory;
 	private Calculator calculator;
 	private MenuItem item;
 	private CalculatorOptionDelegate delegate;
 	
 	@Override
 	protected void setUp() throws Exception {
-		factory = mock(ToastFactory.class);
+		factory = mock(IntentFactory.class);
 		calculator = mock(Calculator.class);
  		item = mock(MenuItem.class);
  		
@@ -35,14 +36,15 @@ public class CalculatorOptionsDelegateTest extends TestCase {
 		assertFalse(result);
 	}
 	
-	public void testWillShowTextWhenMenuSettingsIsSelected() throws Exception {
-		Toast toast = mock(Toast.class);
-		when(factory.createToast(calculator, "Settings Menu Selected", Toast.LENGTH_SHORT)).thenReturn(toast);
+	public void testWillLaunchCalculatorSettingsWhenMenuSettingsIsSelected() throws Exception {
+		Intent intent = mock(Intent.class);
+		when(factory.createIntent(calculator, CalculatorSettings.class)).thenReturn(intent);
 		when(item.getItemId()).thenReturn(R.id.menu_settings);
 
 		boolean result = delegate.onOptionItemSelected(item);
 
 		assertTrue(result);
-		verify(toast, times(1)).show();
+		verify(calculator, times(1)).startActivity(intent);
 	}
+
 }
