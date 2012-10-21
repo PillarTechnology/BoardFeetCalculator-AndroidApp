@@ -22,7 +22,9 @@
         android:layout_below="@+id/editHeight"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="58dp"
-        android:ems="10" />
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:imeOptions="actionDone" />
 
     <TextView
         android:id="@+id/textResult"
