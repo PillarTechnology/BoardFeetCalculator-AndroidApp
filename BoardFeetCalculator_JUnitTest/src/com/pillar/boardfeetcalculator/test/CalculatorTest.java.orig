@@ -2,10 +2,21 @@ package com.pillar.boardfeetcalculator.test;
 
 import com.pillar.boardfeetcalculator.Calculator;
 
+import android.content.Context;
+import android.hardware.input.InputManager;
+import android.inputmethodservice.InputMethodService;
+import android.os.Bundle;
 import android.test.ActivityInstrumentationTestCase2;
+<<<<<<< HEAD
+import android.text.Editable;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
+=======
+>>>>>>> f44a02e959cb41a9082563026dc8f0c546e78594
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
+import android.view.KeyEvent;
 import java.lang.Math;
 
 public class CalculatorTest extends ActivityInstrumentationTestCase2<Calculator> 
@@ -57,6 +68,7 @@ public class CalculatorTest extends ActivityInstrumentationTestCase2<Calculator>
 		assertNotNull(textResult);
 	}
 
+<<<<<<< HEAD
 	public void testCircumferenceCanCalculateDiameter() throws Throwable {
 		runTestOnUiThread(new Runnable() {
 		    public void run() {
@@ -69,4 +81,6 @@ public class CalculatorTest extends ActivityInstrumentationTestCase2<Calculator>
 		    }
 		});
 	}
+=======
+>>>>>>> f44a02e959cb41a9082563026dc8f0c546e78594
 }

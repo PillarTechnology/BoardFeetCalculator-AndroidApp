@@ -23,10 +23,15 @@
         android:layout_below="@+id/editHeight"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="58dp"
+<<<<<<< HEAD
+        android:ems="10"
         android:inputType="numberDecimal"
         android:imeOptions="actionDone" />
+=======
+        android:inputType="numberDecimal"
         android:hint="@string/circumference_hint"
         android:ems="10" />
+>>>>>>> f44a02e959cb41a9082563026dc8f0c546e78594
 
     <TextView
         android:id="@+id/textResult"
