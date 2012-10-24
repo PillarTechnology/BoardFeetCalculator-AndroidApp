@@ -24,8 +24,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="58dp"
         android:inputType="numberDecimal"
-        android:imeOptions="actionDone" />
-        android:hint="@string/circumference_hint"
+        android:imeOptions="actionDone"
+        android:hint="@+string/circumference_hint"
         android:ems="10" />
 
     <TextView
