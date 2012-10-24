@@ -14,22 +14,27 @@ import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
 public class Calculator extends Activity {
-	public Double Diameter = Double.valueOf(0.0);
 
-	private OnEditorActionListener CircumferenceListener;
+	public Double diameter = Double.valueOf(0.0);
+	private OnEditorActionListener circumferenceListener;
 	private CalculatorOptionDelegate optionDelegate;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calculator);        
-    	CircumferenceListener = new OnEditorActionListener() {
+    	circumferenceListener = new OnEditorActionListener() {
     	    @Override
     	    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
     	        if (actionId == EditorInfo.IME_ACTION_DONE) {
-    				Editable text = (Editable) v.getText();//	    				Double value = Double.valueOf(text.toString());
-    				Diameter = Double.valueOf(text.toString());
-    				Diameter /= Math.PI;
+    				Editable text = (Editable) v.getText();
+    				double circumference = 0.0d;
+    				try {
+    					circumference = Double.valueOf(text.toString());
+    				} catch (NumberFormatException nfe) {
+    					//bury
+    				}
+    				diameter = circumference / Math.PI;
     	        }
     	        return false;
     	    }
@@ -37,7 +42,7 @@ public class Calculator extends Activity {
         EditText editCircumference = (EditText)findViewById(com.pillar.boardfeetcalculator.R.id.editCircumference);
         if(editCircumference != null)
         {
-	    	editCircumference.setOnEditorActionListener(CircumferenceListener);
+	    	editCircumference.setOnEditorActionListener(circumferenceListener);
         }
         optionDelegate = new CalculatorOptionDelegate(new IntentFactory(), this);
     }

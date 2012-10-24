@@ -65,7 +65,7 @@ public class CalculatorTest extends ActivityInstrumentationTestCase2<Calculator>
 				Double value = Double.valueOf(Math.PI);
 		    	editCircumference.setText(value.toString());
 		    	editCircumference.onEditorAction(EditorInfo.IME_ACTION_DONE);
-				assertEquals("Circumference EditText cannot calculate diameter", Double.valueOf(1.0), MainActivity.Diameter);
+				assertEquals("Circumference EditText cannot calculate diameter", Double.valueOf(1.0), MainActivity.diameter);
 		    }
 		});
 	}
