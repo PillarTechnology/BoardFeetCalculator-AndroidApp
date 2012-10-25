@@ -69,4 +69,16 @@ public class CalculatorTest extends ActivityInstrumentationTestCase2<Calculator>
 		    }
 		});
 	}
+	
+	public void testCalculatesDiameterOfZeroWhenInputIsInvalid() throws Throwable {
+		runTestOnUiThread(new Runnable() {
+		    public void run() {
+		    	EditText editCircumference = (EditText) MainActivity.findViewById(com.pillar.boardfeetcalculator.R.id.editCircumference);
+				assertNotNull(editCircumference);
+		    	editCircumference.setText("INVALID");
+		    	editCircumference.onEditorAction(EditorInfo.IME_ACTION_DONE);
+				assertEquals("Circumference EditText calculated diameter incorrectly for invalid input", Double.valueOf(0.0), MainActivity.diameter);
+		    }
+		});
+	}
 }
