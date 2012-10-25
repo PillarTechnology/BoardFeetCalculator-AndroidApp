@@ -7,7 +7,7 @@ import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.Test;
 
-public class CalculatorTest {
+public class DoyleScribnerCalculatorTest {
 
 	/*
 	 * Doyle-Scribner Rule according to
@@ -17,15 +17,15 @@ public class CalculatorTest {
 	 * 
 	 * D = diameter in inches L = length in feet
 	 */
-	private Calculator calculator;
+	private DoyleScribnerCalculator doyleScribnerCalculator;
 
 	@Before
 	public void setup() {
-		calculator = new Calculator();
+		doyleScribnerCalculator = new DoyleScribnerCalculator();
 	}
 
 	private void calculate(double diameter, double length, double expected) {
-		assertThat(calculator.calculateBoardFeet(diameter, length),
+		assertThat(doyleScribnerCalculator.calculateBoardFeet(diameter, length),
 				is(expected));
 	}
 
@@ -45,7 +45,7 @@ public class CalculatorTest {
 			calculate(-0.1d, 1.0d, 0.0d);
 			fail("None shall pass!");
 		} catch (IllegalArgumentException iae) {
-			assertThat(iae.getMessage(), is(Calculator.DIAMETER_EX_MSG));
+			assertThat(iae.getMessage(), is(DoyleScribnerCalculator.DIAMETER_EX_MSG));
 		}
 	}
 
@@ -55,7 +55,7 @@ public class CalculatorTest {
 			calculate(1.0d, -1.0d, 0.0d);
 			fail("None shall pass!");
 		} catch (IllegalArgumentException iae) {
-			assertThat(iae.getMessage(), is(Calculator.LENGTH_EX_MSG));
+			assertThat(iae.getMessage(), is(DoyleScribnerCalculator.LENGTH_EX_MSG));
 		}
 	}
 

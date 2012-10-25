@@ -1,6 +1,6 @@
 package com.pillar.doylescribner;
 
-public class Calculator {
+public class DoyleScribnerCalculator {
 
 	public static final String DIAMETER_EX_MSG = "Diameter must be a positive number of inches";
 	public static final String LENGTH_EX_MSG = "Length must be a positive number of feet";
