@@ -12,6 +12,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
+import com.pillar.doylescribner.CircumferenceToDiameterCalculator;
 
 public class Calculator extends Activity {
 
@@ -34,7 +35,8 @@ public class Calculator extends Activity {
     				} catch (NumberFormatException nfe) {
     					//bury
     				}
-    				diameter = circumference / Math.PI;
+    				CircumferenceToDiameterCalculator cal = new CircumferenceToDiameterCalculator();
+    				diameter = cal.calculate(circumference);
     	        }
     	        return false;
     	    }
