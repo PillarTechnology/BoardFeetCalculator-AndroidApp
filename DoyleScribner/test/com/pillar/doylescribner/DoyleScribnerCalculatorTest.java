@@ -1,11 +1,12 @@
 package com.pillar.doylescribner;
 
-import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 public class DoyleScribnerCalculatorTest {
 
@@ -25,7 +26,8 @@ public class DoyleScribnerCalculatorTest {
 	}
 
 	private void calculate(double diameter, double length, double expected) {
-		assertThat(doyleScribnerCalculator.calculateBoardFeet(diameter, length),
+		assertThat(
+				doyleScribnerCalculator.calculateBoardFeet(diameter, length),
 				is(expected));
 	}
 
@@ -39,24 +41,21 @@ public class DoyleScribnerCalculatorTest {
 		calculate(0.0d, 1.0d, 1.0d);
 	}
 
+	@Rule
+	public ExpectedException exception = ExpectedException.none();
+
 	@Test
 	public void shouldThrowExceptionIfDiameterIsLessThanZero() {
-		try {
-			calculate(-0.1d, 1.0d, 0.0d);
-			fail("None shall pass!");
-		} catch (IllegalArgumentException iae) {
-			assertThat(iae.getMessage(), is(DoyleScribnerCalculator.DIAMETER_EX_MSG));
-		}
+		exception.expect(IllegalArgumentException.class);
+		exception.expectMessage(DoyleScribnerCalculator.DIAMETER_EX_MSG);
+		calculate(-0.1d, 1.0d, 0.0d);
 	}
 
 	@Test
 	public void shouldThrowExceptionIfLengthIsLessThanZero() {
-		try {
-			calculate(1.0d, -1.0d, 0.0d);
-			fail("None shall pass!");
-		} catch (IllegalArgumentException iae) {
-			assertThat(iae.getMessage(), is(DoyleScribnerCalculator.LENGTH_EX_MSG));
-		}
+		exception.expect(IllegalArgumentException.class);
+		exception.expectMessage(DoyleScribnerCalculator.LENGTH_EX_MSG);
+		calculate(1.0d, -1.0d, 0.0d);
 	}
 
 	@Test
