@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.TextView.OnEditorActionListener;
 
 import com.pillar.android.IntentFactory;
 import com.pillar.doylescribner.CircumferenceToDiameterCalculator;
@@ -18,9 +19,10 @@ public class Calculator extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_calculator);
-		((EditText) findViewById(R.id.editCircumference))
-				.setOnEditorActionListener(new CircumferenceActionListener(this, new DoyleScribnerCalculator(),
-						new CircumferenceToDiameterCalculator()));
+		OnEditorActionListener listener = new CircumferenceActionListener(this, new DoyleScribnerCalculator(),
+				new CircumferenceToDiameterCalculator());
+		((EditText) findViewById(R.id.editCircumference)).setOnEditorActionListener(listener);
+		((EditText) findViewById(R.id.editHeight)).setOnEditorActionListener(listener);
 		optionDelegate = new CalculatorOptionDelegate(new IntentFactory(), this);
 	}
 

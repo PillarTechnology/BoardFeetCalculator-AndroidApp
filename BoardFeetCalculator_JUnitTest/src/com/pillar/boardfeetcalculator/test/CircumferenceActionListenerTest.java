@@ -1,8 +1,10 @@
 package com.pillar.boardfeetcalculator.test;
 
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
 import junit.framework.TestCase;
 import android.text.Editable;
 import android.view.inputmethod.EditorInfo;
@@ -20,8 +22,7 @@ public class CircumferenceActionListenerTest extends TestCase {
 	private DoyleScribnerCalculator bfCalculator = new DoyleScribnerCalculator();
 	private CircumferenceToDiameterCalculator cdCalculator = new CircumferenceToDiameterCalculator();
 	
-	private void checkBehavior(String expected, String height, String circumference) {
-		//REALLY don't like the level to which I've had to mock here. How can we make it better? I need a pair!
+	private EditText checkBehavior(String expected, String height, String circumference, int actionType) {
 		Editable heightControl = mock(Editable.class);
 		EditText heightView = mock(EditText.class);
 		Calculator calculator = mock(Calculator.class);
@@ -39,24 +40,66 @@ public class CircumferenceActionListenerTest extends TestCase {
 			
 		CircumferenceActionListener listener = new CircumferenceActionListener(calculator, bfCalculator, cdCalculator);
 
-		listener.onEditorAction(circumferenceView, EditorInfo.IME_ACTION_DONE, null);
+		listener.onEditorAction(circumferenceView, actionType, null);
 
+		return boardFeetView;
+	}
+	
+	private void checkBehaviorOccurs(String expected, String height, String circumference, int actionType) {
+		EditText boardFeetView = checkBehavior(expected, height, circumference, actionType);
 		verify(boardFeetView).setText(expected);
 	}
 	
-	public void testOnEditorActionPopulatesTheBoardFootView() {
-		checkBehavior("38.12736512446372", "8", "40");
+	private void checkBehaviorDoesNotOccur(String expected, String height, String circumference, int actionType) {
+		EditText boardFeetView = checkBehavior(expected, height, circumference, actionType);
+		verify(boardFeetView, never()).setText(expected);
 	}
 	
-	public void testOnEditorActionDisplaysERRORWithBadHeightInput() {
-		checkBehavior("ERROR", "-5", "40");
+	public void testOnEditorActionPopulatesTheBoardFootViewWithDone() {
+		checkBehaviorOccurs("38.12736512446372", "8", "40", EditorInfo.IME_ACTION_DONE);
 	}
 	
-	public void testOnEditorActionDisplaysERRORWithBadCircumferenceInput() {
-		checkBehavior("ERROR", "5", "-40");
+	public void testOnEditorActionDisplaysERRORWithBadHeightInputWithDone() {
+		checkBehaviorOccurs("ERROR", "-5", "40", EditorInfo.IME_ACTION_DONE);
 	}
 	
-	public void testOnEditorActionDisplaysERRORWithEmptyInput() {
-		checkBehavior("ERROR", "", "");
+	public void testOnEditorActionDisplaysERRORWithBadCircumferenceInputWithDone() {
+		checkBehaviorOccurs("ERROR", "5", "-40", EditorInfo.IME_ACTION_DONE);
+	}
+
+	public void testOnEditorActionDisplaysNothingWithEmptyInputWithDone() {
+		checkBehaviorDoesNotOccur("", "", "", EditorInfo.IME_ACTION_DONE);
+	}
+	
+	public void testOnEditorActionDisplaysNothingWithEmptyHeightWithDone() {
+		checkBehaviorDoesNotOccur("", "", "30", EditorInfo.IME_ACTION_DONE);
+	}
+	
+	public void testOnEditorActionDisplaysNothingWithEmptyCircumferenceWithDone() {
+		checkBehaviorDoesNotOccur("", "30", "", EditorInfo.IME_ACTION_DONE);
+	}
+	
+	public void testOnEditorActionPopulatesTheBoardFootViewWithNext() {
+		checkBehaviorOccurs("38.12736512446372", "8", "40", EditorInfo.IME_ACTION_NEXT);
+	}
+	
+	public void testOnEditorActionDisplaysERRORWithBadHeightInputWithNext() {
+		checkBehaviorOccurs("ERROR", "-5", "40", EditorInfo.IME_ACTION_NEXT);
+	}
+	
+	public void testOnEditorActionDisplaysERRORWithBadCircumferenceInputWithNext() {
+		checkBehaviorOccurs("ERROR", "5", "-40", EditorInfo.IME_ACTION_NEXT);
+	}
+
+	public void testOnEditorActionDisplaysNothingWithEmptyInputWithNext() {
+		checkBehaviorDoesNotOccur("", "", "", EditorInfo.IME_ACTION_NEXT);
+	}
+	
+	public void testOnEditorActionDisplaysNothingWithEmptyHeightInputWithNext() {
+		checkBehaviorDoesNotOccur("", "", "30", EditorInfo.IME_ACTION_NEXT);
+	}
+	
+	public void testOnEditorActionDisplaysNothingWithEmptyCircumferenceInputWithNext() {
+		checkBehaviorDoesNotOccur("", "30", "", EditorInfo.IME_ACTION_NEXT);
 	}
 }

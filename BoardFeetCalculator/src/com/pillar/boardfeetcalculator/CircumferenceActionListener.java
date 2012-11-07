@@ -26,7 +26,7 @@ public class CircumferenceActionListener implements OnEditorActionListener {
 	@Override
 	public boolean onEditorAction(TextView view, int actionId, KeyEvent event) {
 		String boardFeet = "ERROR";
-		if (actionId == EditorInfo.IME_ACTION_DONE) {
+		if (isDoneOrNext(actionId) && haveBothInputs()) {
 			try {
 				boardFeet = calculateBoardFeet(view);
 			} catch (NumberFormatException nfe) {
@@ -39,13 +39,28 @@ public class CircumferenceActionListener implements OnEditorActionListener {
 		return false;
 	}
 
+	private boolean isDoneOrNext(int actionId) {
+		return actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_NEXT;
+	}
+
+	private boolean haveBothInputs() {
+		boolean rval = false;
+		try {
+			Double.valueOf(getCircumferenceTextField().getText().toString());
+			Double.valueOf(getHeightTextField().getText().toString());
+			rval = true;
+		} catch (NumberFormatException nfe) {
+			rval = false; // explicit
+		}
+		return rval;
+	}
+
 	private String calculateBoardFeet(TextView view) {
 		return Double.toString(boardFeetCalculator.calculateBoardFeet(calculateDiameter(view), getHeight()));
 	}
 
 	private double getHeight() {
-		EditText editHeight = getHeightTextField();
-		return Double.valueOf(editHeight.getText().toString());
+		return Double.valueOf(getHeightTextField().getText().toString());
 	}
 
 	private double calculateDiameter(TextView view) {
@@ -54,6 +69,10 @@ public class CircumferenceActionListener implements OnEditorActionListener {
 
 	private void setBoardFeetTextValue(String value) {
 		getBoardFeetTextField().setText(value);
+	}
+
+	private EditText getCircumferenceTextField() {
+		return getEditTextField(R.id.editCircumference);
 	}
 
 	private EditText getHeightTextField() {
