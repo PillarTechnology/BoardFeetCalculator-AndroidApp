@@ -1,15 +1,15 @@
 package com.pillar.boardfeetcalculator;
 
-import android.app.ListActivity;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
+import android.preference.PreferenceActivity;
 
-public class CalculatorSettings extends ListActivity {
+public class CalculatorSettings extends PreferenceActivity {
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
-	    setListAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, new String[] {"Calculation Type"}));
+	    addPreferencesFromResource(R.layout.activity_calculatorsettings);
 	}
 
 }

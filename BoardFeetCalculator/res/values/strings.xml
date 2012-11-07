@@ -7,4 +7,5 @@
     <string name="label_height">Tree Height</string>
     <string name="label_circumference">Tree Circumference</string>
     <string name="label_superfluous">TextView</string>
+    <string name="photo_pref">Save with Photo</string>
 </resources>
