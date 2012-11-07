@@ -55,5 +55,15 @@
         android:layout_marginTop="31dp"
         android:text="@+string/label_circumference"
         android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <EditText
+        android:id="@+id/editBoardFeet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textResult"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="74dp"
+        android:ems="10"
+        android:inputType="text" />
     
 </RelativeLayout>
