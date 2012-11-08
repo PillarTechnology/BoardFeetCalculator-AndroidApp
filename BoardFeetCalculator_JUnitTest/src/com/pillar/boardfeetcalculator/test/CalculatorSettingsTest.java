@@ -1,14 +1,16 @@
 package com.pillar.boardfeetcalculator.test;
 
 import com.pillar.boardfeetcalculator.CalculatorSettings;
+import com.pillar.boardfeetcalculator.CalculatorSettings.PrefsFragment;
 
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
-import android.preference.TwoStatePreference;
+import android.preference.PreferenceCategory;
 import android.test.ActivityInstrumentationTestCase2;
 
 public class CalculatorSettingsTest extends ActivityInstrumentationTestCase2<CalculatorSettings>{
 	private CalculatorSettings MainActivity;
+	private PrefsFragment pf;
 	
 	public CalculatorSettingsTest(){
 		super(CalculatorSettings.class);
@@ -17,39 +19,57 @@ public class CalculatorSettingsTest extends ActivityInstrumentationTestCase2<Cal
 	protected void setUp(){
 		MainActivity = getActivity();
 		assertNotNull(MainActivity);
+		
+		pf = (PrefsFragment) MainActivity.getFragmentManager().findFragmentById(android.R.id.content);
+		
 	}
 	
 	protected void tearDown() throws Exception{
 		super.tearDown();
 	}
 	
-	public void testPreferencesContainTwoItems(){
-		int numOfPreferences = MainActivity.getPreferenceScreen().getPreferenceCount();
-		assertEquals(2, numOfPreferences);
+	public void testPreferencesContainOnePreferenceCategory(){
+//		PrefsFragment pf = (PrefsFragment) MainActivity.getFragmentManager().findFragmentById(android.R.id.content);
+		assertEquals (1, pf.getPreferenceScreen().getPreferenceCount());
+//		int numOfPreferences = MainActivity.getPreferenceScreen().getPreferenceCount();
+//		assertEquals(2, numOfPreferences);
+	}
+	
+	public void testPreferenceCategoryContainTwoItems(){
+//		PrefsFragment pf = (PrefsFragment) MainActivity.getFragmentManager().findFragmentById(android.R.id.content);
+		PreferenceCategory pc = (PreferenceCategory) pf.getPreferenceScreen().getPreference(0);
+		assertEquals (2, pc.getPreferenceCount());
+//		int numOfPreferences = MainActivity.getPreferenceScreen().getPreferenceCount();
+//		assertEquals(2, numOfPreferences);
 	}
 	
 	public void testFirstPreferenceIsListPreference(){
-		ListPreference firstPref = (ListPreference) MainActivity.getPreferenceScreen().getPreference(0);
+		PreferenceCategory pc = (PreferenceCategory) pf.getPreferenceScreen().getPreference(0);
+		ListPreference firstPref = (ListPreference) pc.getPreference(0);
 		assertNotNull(firstPref);
 	}
 	
 	public void testSecondPreferenceIsCheckBoxPreference(){
-		CheckBoxPreference secondPref = (CheckBoxPreference) MainActivity.getPreferenceScreen().getPreference(1);
+		PreferenceCategory pc = (PreferenceCategory) pf.getPreferenceScreen().getPreference(0);
+		CheckBoxPreference secondPref = (CheckBoxPreference) pc.getPreference(1);
 		assertNotNull(secondPref);
 	}
 	
 	public void testFirstPreferenceTitleIsCalculationType(){
-		String firstItem = (String) MainActivity.getPreferenceScreen().getPreference(0).getTitle();
+		PreferenceCategory pc = (PreferenceCategory) pf.getPreferenceScreen().getPreference(0);
+		String firstItem = (String) pc.getPreference(0).getTitle();
 		assertEquals("Calculation Type", firstItem);
 	}
 	
 	public void testSecondPreferenceTitleIsSaveWithPhoto(){
-		String secondItem = (String) MainActivity.getPreferenceScreen().getPreference(1).getTitle();
+		PreferenceCategory pc = (PreferenceCategory) pf.getPreferenceScreen().getPreference(0);
+		String secondItem = (String) pc.getPreference(1).getTitle();
 		assertEquals("Save with Photo", secondItem);
 	}
 	
 	public void testSecondPreferenceDefaultValueIsTrue(){
-		CheckBoxPreference checkBoxPref = (CheckBoxPreference) MainActivity.getPreferenceScreen().getPreference(1);
+		PreferenceCategory pc = (PreferenceCategory) pf.getPreferenceScreen().getPreference(0);
+		CheckBoxPreference checkBoxPref = (CheckBoxPreference) pc.getPreference(1);
 		assertNotNull(checkBoxPref);
 		boolean defaultValue = checkBoxPref.isChecked();
 		assertTrue(defaultValue);

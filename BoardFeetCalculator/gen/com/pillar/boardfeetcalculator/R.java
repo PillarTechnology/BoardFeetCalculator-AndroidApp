@@ -44,6 +44,7 @@ public final class R {
         public static final int label_superfluous=0x7f050009;
         public static final int menu_settings=0x7f050003;
         public static final int photo_pref=0x7f05000a;
+        public static final int preferences=0x7f05000b;
         public static final int title_activity_calculator=0x7f050004;
     }
     public static final class style {
