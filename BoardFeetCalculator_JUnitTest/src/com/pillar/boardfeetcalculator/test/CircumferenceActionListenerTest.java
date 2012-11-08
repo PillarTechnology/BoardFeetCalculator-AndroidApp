@@ -58,15 +58,23 @@ public class CircumferenceActionListenerTest extends TestCase {
 	public void testOnEditorActionPopulatesTheBoardFootViewWithDone() {
 		checkBehaviorOccurs("38.12736512446372", "8", "40", EditorInfo.IME_ACTION_DONE);
 	}
-	
-	public void testOnEditorActionDisplaysERRORWithBadHeightInputWithDone() {
-		checkBehaviorOccurs("ERROR", "-5", "40", EditorInfo.IME_ACTION_DONE);
+
+	public void testOnEditorActionDisplaysNothingWhenCircumferenceIsTooLowWithDone() {
+		checkBehaviorDoesNotOccur("", "30", "6.49999", EditorInfo.IME_ACTION_DONE);
 	}
 	
-	public void testOnEditorActionDisplaysERRORWithBadCircumferenceInputWithDone() {
-		checkBehaviorOccurs("ERROR", "5", "-40", EditorInfo.IME_ACTION_DONE);
+	public void testOnEditorActionDisplaysNothingWhenHeightIsTooLowWithDone() {
+		checkBehaviorDoesNotOccur("", "7.99999", "6.5", EditorInfo.IME_ACTION_DONE);	
 	}
 
+	public void testOnEditorActionDisplaysNothingWhenCircumferenceIsTooLowWithNext() {
+		checkBehaviorDoesNotOccur("", "30", "6.49999", EditorInfo.IME_ACTION_NEXT);
+	}
+	
+	public void testOnEditorActionDisplaysNothingWhenHeightIsTooLowWithNext() {
+		checkBehaviorDoesNotOccur("", "7.99999", "6.5", EditorInfo.IME_ACTION_NEXT);	
+	}
+	
 	public void testOnEditorActionDisplaysNothingWithEmptyInputWithDone() {
 		checkBehaviorDoesNotOccur("", "", "", EditorInfo.IME_ACTION_DONE);
 	}
@@ -81,14 +89,6 @@ public class CircumferenceActionListenerTest extends TestCase {
 	
 	public void testOnEditorActionPopulatesTheBoardFootViewWithNext() {
 		checkBehaviorOccurs("38.12736512446372", "8", "40", EditorInfo.IME_ACTION_NEXT);
-	}
-	
-	public void testOnEditorActionDisplaysERRORWithBadHeightInputWithNext() {
-		checkBehaviorOccurs("ERROR", "-5", "40", EditorInfo.IME_ACTION_NEXT);
-	}
-	
-	public void testOnEditorActionDisplaysERRORWithBadCircumferenceInputWithNext() {
-		checkBehaviorOccurs("ERROR", "5", "-40", EditorInfo.IME_ACTION_NEXT);
 	}
 
 	public void testOnEditorActionDisplaysNothingWithEmptyInputWithNext() {

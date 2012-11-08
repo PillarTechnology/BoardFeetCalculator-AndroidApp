@@ -26,7 +26,7 @@ public class CircumferenceActionListener implements OnEditorActionListener {
 	@Override
 	public boolean onEditorAction(TextView view, int actionId, KeyEvent event) {
 		String boardFeet = "ERROR";
-		if (isDoneOrNext(actionId) && haveBothInputs()) {
+		if (isDoneOrNext(actionId) && haveBothInputs() && inputsAreValid()) {
 			try {
 				boardFeet = calculateBoardFeet(view);
 			} catch (NumberFormatException nfe) {
@@ -39,6 +39,18 @@ public class CircumferenceActionListener implements OnEditorActionListener {
 		return false;
 	}
 
+	private boolean inputsAreValid() {
+		boolean rval = false;
+		try {
+			rval = 6.5d <= Double.valueOf(getCircumferenceTextField().getText().toString()) &&
+			       8 <= Double.valueOf(getHeightTextField().getText().toString());
+			
+		} catch (NumberFormatException nfe) {
+			rval = false; // explicit
+		}
+		return rval;
+	}
+	
 	private boolean isDoneOrNext(int actionId) {
 		return actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_NEXT;
 	}
