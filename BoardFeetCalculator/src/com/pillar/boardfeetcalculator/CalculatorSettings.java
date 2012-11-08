@@ -1,15 +1,25 @@
 package com.pillar.boardfeetcalculator;
 
-import android.app.ListActivity;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
+import android.preference.PreferenceActivity;
+import android.preference.PreferenceFragment;
 
-public class CalculatorSettings extends ListActivity {
-
+public class CalculatorSettings extends PreferenceActivity {
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
-	    setListAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, new String[] {"Calculation Type"}));
+	    
+	    getFragmentManager().beginTransaction().replace(android.R.id.content,
+                new PrefsFragment()).commit();
 	}
 
+	public static class PrefsFragment extends PreferenceFragment {
+		@Override
+		public void onCreate(Bundle savedInstanceState) {
+			super.onCreate(savedInstanceState);
+			
+			addPreferencesFromResource(R.layout.activity_calculatorsettings);
+		}
+	}
 }

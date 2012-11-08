@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <resources>
+        <string-array name="calculationArray">
+            <item >calcItem1</item>
+        </string-array>
+        <string-array name="calculationValues">
+            <item >calcValue1</item>
+        </string-array>
+        <string name="calcItem1">item1</string>
+        <string name="calcValue1">item1</string>
+    </resources>
