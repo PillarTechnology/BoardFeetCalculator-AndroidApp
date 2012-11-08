@@ -10,13 +10,13 @@ import android.widget.TextView.OnEditorActionListener;
 import com.pillar.doylescribner.CircumferenceToDiameterCalculator;
 import com.pillar.doylescribner.DoyleScribnerCalculator;
 
-public class CircumferenceActionListener implements OnEditorActionListener {
+public class InputActionListener implements OnEditorActionListener {
 
 	private Calculator calculator;
 	private DoyleScribnerCalculator boardFeetCalculator;
 	private CircumferenceToDiameterCalculator diameterCalculator;
 
-	public CircumferenceActionListener(Calculator calculator, DoyleScribnerCalculator bfCalculator,
+	public InputActionListener(Calculator calculator, DoyleScribnerCalculator bfCalculator,
 			CircumferenceToDiameterCalculator cdCalculator) {
 		this.calculator = calculator;
 		boardFeetCalculator = bfCalculator;
@@ -25,32 +25,36 @@ public class CircumferenceActionListener implements OnEditorActionListener {
 
 	@Override
 	public boolean onEditorAction(TextView view, int actionId, KeyEvent event) {
-		String boardFeet = "ERROR";
-		if (isDoneOrNext(actionId) && haveBothInputs() && inputsAreValid()) {
-			try {
-				boardFeet = calculateBoardFeet(view);
-			} catch (NumberFormatException nfe) {
-				// no-op
-			} catch (IllegalArgumentException iae) {
-				// no-op
+		String boardFeet = "";
+		if (isDoneOrNext(actionId) && haveBothInputs()) {
+			if (inputsAreValid()) {
+				try {
+					boardFeet = calculateBoardFeet(view);
+				} catch (NumberFormatException nfe) {
+					boardFeet = "ERROR";
+				} catch (IllegalArgumentException iae) {
+					boardFeet = "ERROR";
+				}
+			} else {
+				boardFeet = "ERROR";
 			}
-			setBoardFeetTextValue(boardFeet);
 		}
+		setBoardFeetTextValue(boardFeet);
 		return false;
 	}
 
 	private boolean inputsAreValid() {
 		boolean rval = false;
 		try {
-			rval = 6.5d <= Double.valueOf(getCircumferenceTextField().getText().toString()) &&
-			       8 <= Double.valueOf(getHeightTextField().getText().toString());
-			
+			rval = 6.5d <= Double.valueOf(getCircumferenceTextField().getText().toString())
+					&& 8 <= Double.valueOf(getHeightTextField().getText().toString());
+
 		} catch (NumberFormatException nfe) {
 			rval = false; // explicit
 		}
 		return rval;
 	}
-	
+
 	private boolean isDoneOrNext(int actionId) {
 		return actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_NEXT;
 	}
