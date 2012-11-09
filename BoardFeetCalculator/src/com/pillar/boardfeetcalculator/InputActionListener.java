@@ -30,8 +30,6 @@ public class InputActionListener implements OnEditorActionListener {
 			if (inputsAreValid()) {
 				try {
 					boardFeet = calculateBoardFeet(view);
-				} catch (NumberFormatException nfe) {
-					boardFeet = "ERROR";
 				} catch (IllegalArgumentException iae) {
 					boardFeet = "ERROR";
 				}
@@ -48,7 +46,6 @@ public class InputActionListener implements OnEditorActionListener {
 		try {
 			rval = 6.5d <= Double.valueOf(getCircumferenceTextField().getText().toString())
 					&& 8 <= Double.valueOf(getHeightTextField().getText().toString());
-
 		} catch (NumberFormatException nfe) {
 			rval = false; // explicit
 		}
