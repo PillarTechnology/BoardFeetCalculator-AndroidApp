@@ -10,9 +10,10 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="27dp"
-        android:inputType="numberDecimal"
+        android:ems="10"
         android:hint="@string/height_hint"
-        android:ems="10" >
+        android:inputType="numberDecimal" >
+
         <requestFocus />
     </EditText>
 
@@ -23,19 +24,10 @@
         android:layout_below="@+id/editHeight"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="58dp"
-        android:inputType="numberDecimal"
-        android:imeOptions="actionDone"
+        android:ems="10"
         android:hint="@+string/circumference_hint"
-        android:ems="10" />
-
-    <TextView
-        android:id="@+id/textResult"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="82dp"
-        android:text="@+string/label_superfluous" />
+        android:imeOptions="actionDone"
+        android:inputType="numberDecimal" />
 
     <TextView
         android:id="@+id/textView1"
@@ -55,15 +47,53 @@
         android:layout_marginTop="31dp"
         android:text="@+string/label_circumference"
         android:textAppearance="?android:attr/textAppearanceMedium" />
+        
+    <TextView
+        android:id="@+id/displayLatitude"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="136dp"
+        android:layout_toRightOf="@+id/textView2"
+        android:text="lat" />
+
+    <TextView
+        android:id="@+id/displayLongitude"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/displayLatitude"
+        android:layout_alignTop="@+id/displayLatitude"
+        android:layout_marginTop="28dp"
+        android:text="lon" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/displayLongitude"
+        android:layout_alignBottom="@+id/displayLongitude"
+        android:layout_alignLeft="@+id/editCircumference"
+        android:text="@+string/label_longitude"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/displayLatitude"
+        android:layout_alignBottom="@+id/displayLatitude"
+        android:layout_alignLeft="@+id/textView4"
+        android:text="@+string/label_latitude"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <EditText
         android:id="@+id/editBoardFeet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/textResult"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="74dp"
+        android:layout_above="@+id/displayLatitude"
+        android:layout_alignRight="@+id/displayLatitude"
+        android:layout_marginBottom="21dp"
         android:ems="10"
         android:inputType="text" />
-    
+
 </RelativeLayout>

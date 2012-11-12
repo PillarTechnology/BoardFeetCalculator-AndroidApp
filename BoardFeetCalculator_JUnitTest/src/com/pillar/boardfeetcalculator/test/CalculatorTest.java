@@ -52,7 +52,7 @@ public class CalculatorTest extends ActivityInstrumentationTestCase2<Calculator>
 	}
 
 	public void testResultAreaExists() {
-		TextView textResult = (TextView) MainActivity.findViewById(R.id.textResult);
+		TextView textResult = (TextView) MainActivity.findViewById(R.id.editBoardFeet);
 		assertNotNull(textResult);
 	}
 
