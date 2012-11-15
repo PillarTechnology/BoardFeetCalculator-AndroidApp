@@ -12,6 +12,12 @@ import com.pillar.doylescribner.DoyleScribnerCalculator;
 
 public class InputActionListener implements OnEditorActionListener {
 
+	private static final String EMPTY_STRING = "";
+	public static final double MINIMUM_HEIGHT = 8d;
+	public static final double MINIMUM_CIRCUMFERENCE = 6.5d;
+	public static final String EMPTY_MESSAGE = EMPTY_STRING;
+	public static final String ERROR_MESSAGE = "ERROR";
+	
 	private Calculator calculator;
 	private DoyleScribnerCalculator boardFeetCalculator;
 	private CircumferenceToDiameterCalculator diameterCalculator;
@@ -25,18 +31,16 @@ public class InputActionListener implements OnEditorActionListener {
 
 	@Override
 	public boolean onEditorAction(TextView view, int actionId, KeyEvent event) {
-		String boardFeet = "";
+		String boardFeet = EMPTY_MESSAGE;
 		if (isDoneOrNext(actionId) && haveBothInputs()) {
 			if (inputsAreValid()) {
 				try {
 					boardFeet = calculateBoardFeet(view);
-				} catch (NumberFormatException nfe) {
-					boardFeet = "ERROR";
 				} catch (IllegalArgumentException iae) {
-					boardFeet = "ERROR";
+					boardFeet = ERROR_MESSAGE;
 				}
 			} else {
-				boardFeet = "ERROR";
+				boardFeet = ERROR_MESSAGE;
 			}
 		}
 		setBoardFeetTextValue(boardFeet);
@@ -46,9 +50,8 @@ public class InputActionListener implements OnEditorActionListener {
 	private boolean inputsAreValid() {
 		boolean rval = false;
 		try {
-			rval = 6.5d <= Double.valueOf(getCircumferenceTextField().getText().toString())
-					&& 8 <= Double.valueOf(getHeightTextField().getText().toString());
-
+			rval = MINIMUM_CIRCUMFERENCE <= Double.valueOf(getCircumferenceTextField().getText().toString())
+					&& MINIMUM_HEIGHT <= Double.valueOf(getHeightTextField().getText().toString());
 		} catch (NumberFormatException nfe) {
 			rval = false; // explicit
 		}
@@ -60,15 +63,7 @@ public class InputActionListener implements OnEditorActionListener {
 	}
 
 	private boolean haveBothInputs() {
-		boolean rval = false;
-		try {
-			Double.valueOf(getCircumferenceTextField().getText().toString());
-			Double.valueOf(getHeightTextField().getText().toString());
-			rval = true;
-		} catch (NumberFormatException nfe) {
-			rval = false; // explicit
-		}
-		return rval;
+		return !(EMPTY_STRING.equals(getCircumferenceFieldValue()) || EMPTY_STRING.equals(getHeightFieldValue()));
 	}
 
 	private String calculateBoardFeet(TextView view) {
@@ -87,6 +82,14 @@ public class InputActionListener implements OnEditorActionListener {
 		getBoardFeetTextField().setText(value);
 	}
 
+	private String getCircumferenceFieldValue() {
+		return getCircumferenceTextField().getText().toString();
+	}
+	
+	private String getHeightFieldValue() {
+		return getHeightTextField().getText().toString();
+	}
+	
 	private EditText getCircumferenceTextField() {
 		return getEditTextField(R.id.editCircumference);
 	}

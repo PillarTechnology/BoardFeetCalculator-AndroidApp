@@ -16,6 +16,7 @@ import com.pillar.doylescribner.DoyleScribnerCalculator;
 
 public class InputActionListenerTest extends TestCase {
 
+	private static final String EMPTY_STRING = "";
 	private DoyleScribnerCalculator bfCalculator = new DoyleScribnerCalculator();
 	private CircumferenceToDiameterCalculator cdCalculator = new CircumferenceToDiameterCalculator();
 
@@ -52,31 +53,31 @@ public class InputActionListenerTest extends TestCase {
 	}
 
 	public void testOnEditorActionDisplaysNothingWhenCircumferenceIsTooLowWithDone() {
-		checkBehaviorShouldOccur("ERROR", "30", "6.49999", EditorInfo.IME_ACTION_DONE);
+		checkBehaviorShouldOccur(InputActionListener.ERROR_MESSAGE, "30", "6.49999", EditorInfo.IME_ACTION_DONE);
 	}
 
 	public void testOnEditorActionDisplaysNothingWhenHeightIsTooLowWithDone() {
-		checkBehaviorShouldOccur("ERROR", "7.99999", "6.5", EditorInfo.IME_ACTION_DONE);
+		checkBehaviorShouldOccur(InputActionListener.ERROR_MESSAGE, "7.99999", "6.5", EditorInfo.IME_ACTION_DONE);
 	}
 
 	public void testOnEditorActionDisplaysNothingWhenCircumferenceIsTooLowWithNext() {
-		checkBehaviorShouldOccur("ERROR", "30", "6.49999", EditorInfo.IME_ACTION_NEXT);
+		checkBehaviorShouldOccur(InputActionListener.ERROR_MESSAGE, "30", "6.49999", EditorInfo.IME_ACTION_NEXT);
 	}
 
 	public void testOnEditorActionDisplaysNothingWhenHeightIsTooLowWithNext() {
-		checkBehaviorShouldOccur("ERROR", "7.99999", "6.5", EditorInfo.IME_ACTION_NEXT);
+		checkBehaviorShouldOccur(InputActionListener.ERROR_MESSAGE, "7.99999", "6.5", EditorInfo.IME_ACTION_NEXT);
 	}
 
 	public void testOnEditorActionDisplaysNothingWithEmptyInputWithDone() {
-		checkBehaviorShouldOccur("", "", "", EditorInfo.IME_ACTION_DONE);
+		checkBehaviorShouldOccur(InputActionListener.EMPTY_MESSAGE, EMPTY_STRING, EMPTY_STRING, EditorInfo.IME_ACTION_DONE);
 	}
 
 	public void testOnEditorActionDisplaysNothingWithEmptyHeightWithDone() {
-		checkBehaviorShouldOccur("", "", "30", EditorInfo.IME_ACTION_DONE);
+		checkBehaviorShouldOccur(InputActionListener.EMPTY_MESSAGE, EMPTY_STRING, "30", EditorInfo.IME_ACTION_DONE);
 	}
 
 	public void testOnEditorActionDisplaysNothingWithEmptyCircumferenceWithDone() {
-		checkBehaviorShouldOccur("", "30", "", EditorInfo.IME_ACTION_DONE);
+		checkBehaviorShouldOccur(InputActionListener.EMPTY_MESSAGE, "30", EMPTY_STRING, EditorInfo.IME_ACTION_DONE);
 	}
 
 	public void testOnEditorActionPopulatesTheBoardFootViewWithNext() {
@@ -84,14 +85,14 @@ public class InputActionListenerTest extends TestCase {
 	}
 
 	public void testOnEditorActionDisplaysNothingWithEmptyInputWithNext() {
-		checkBehaviorShouldOccur("", "", "", EditorInfo.IME_ACTION_NEXT);
+		checkBehaviorShouldOccur(InputActionListener.EMPTY_MESSAGE, EMPTY_STRING, EMPTY_STRING, EditorInfo.IME_ACTION_NEXT);
 	}
 
 	public void testOnEditorActionDisplaysNothingWithEmptyHeightInputWithNext() {
-		checkBehaviorShouldOccur("", "", "30", EditorInfo.IME_ACTION_NEXT);
+		checkBehaviorShouldOccur(InputActionListener.EMPTY_MESSAGE, EMPTY_STRING, "30", EditorInfo.IME_ACTION_NEXT);
 	}
 
 	public void testOnEditorActionDisplaysNothingWithEmptyCircumferenceInputWithNext() {
-		checkBehaviorShouldOccur("", "30", "", EditorInfo.IME_ACTION_NEXT);
+		checkBehaviorShouldOccur(InputActionListener.EMPTY_MESSAGE, "30", EMPTY_STRING, EditorInfo.IME_ACTION_NEXT);
 	}
 }

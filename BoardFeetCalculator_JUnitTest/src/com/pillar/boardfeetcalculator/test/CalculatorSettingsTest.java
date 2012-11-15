@@ -3,7 +3,6 @@ package com.pillar.boardfeetcalculator.test;
 import com.pillar.boardfeetcalculator.CalculatorSettings;
 import com.pillar.boardfeetcalculator.CalculatorSettings.PrefsFragment;
 
-import android.annotation.TargetApi;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.PreferenceCategory;
@@ -17,13 +16,12 @@ public class CalculatorSettingsTest extends ActivityInstrumentationTestCase2<Cal
 		super(CalculatorSettings.class);
 	}
 	
-	@TargetApi(11)
 	protected void setUp(){
 		MainActivity = getActivity();
 		assertNotNull(MainActivity);
 		
 		pf = (PrefsFragment) MainActivity.getFragmentManager().findFragmentById(android.R.id.content);
-		
+		assertNotNull(pf);
 	}
 	
 	protected void tearDown() throws Exception{
@@ -61,13 +59,5 @@ public class CalculatorSettingsTest extends ActivityInstrumentationTestCase2<Cal
 		PreferenceCategory pc = (PreferenceCategory) pf.getPreferenceScreen().getPreference(0);
 		String secondItem = (String) pc.getPreference(1).getTitle();
 		assertEquals("Save with Photo", secondItem);
-	}
-	
-	public void testSecondPreferenceDefaultValueIsTrue(){
-		PreferenceCategory pc = (PreferenceCategory) pf.getPreferenceScreen().getPreference(0);
-		CheckBoxPreference checkBoxPref = (CheckBoxPreference) pc.getPreference(1);
-		assertNotNull(checkBoxPref);
-		boolean defaultValue = checkBoxPref.isChecked();
-		assertTrue(defaultValue);
 	}
 }
