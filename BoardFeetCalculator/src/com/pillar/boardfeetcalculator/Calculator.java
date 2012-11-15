@@ -19,8 +19,9 @@ public class Calculator extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_calculator);
-		OnEditorActionListener listener = new InputActionListener(this, new DoyleScribnerCalculator(),
+		CalculationWrapper calculationWrapper = new CalculationWrapper(new DoyleScribnerCalculator(),
 				new CircumferenceToDiameterCalculator());
+		OnEditorActionListener listener = new InputActionListener(this, calculationWrapper);
 		((EditText) findViewById(R.id.editCircumference)).setOnEditorActionListener(listener);
 		((EditText) findViewById(R.id.editHeight)).setOnEditorActionListener(listener);
 		optionDelegate = new CalculatorOptionDelegate(new IntentFactory(), this);
