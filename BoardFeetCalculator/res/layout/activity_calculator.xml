@@ -47,7 +47,7 @@
         android:layout_marginTop="31dp"
         android:text="@+string/label_circumference"
         android:textAppearance="?android:attr/textAppearanceMedium" />
-        
+
     <TextView
         android:id="@+id/displayLatitude"
         android:layout_width="wrap_content"

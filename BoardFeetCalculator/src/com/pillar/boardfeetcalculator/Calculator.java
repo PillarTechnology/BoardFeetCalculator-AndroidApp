@@ -21,8 +21,7 @@ import com.pillar.doylescribner.DoyleScribnerCalculator;
 public class Calculator extends Activity implements LocationListener {
 
 	private CalculatorOptionDelegate optionDelegate;
-	private TextView lat;
-	private TextView lon;
+	private TextView lat, lon;
 	private LocationManager locationManager;
 	private String provider;
 
@@ -49,20 +48,16 @@ public class Calculator extends Activity implements LocationListener {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		return optionDelegate.onOptionItemSelected(item) ? true : super.onOptionsItemSelected(item);
 	}
-
+	
 	private void initializeLocationListener() {
 		lat = (TextView) findViewById(R.id.displayLatitude);
-		lon = (TextView) findViewById(R.id.displayLongitude);
+		lon = (TextView) findViewById(R.id.displayLongitude);	
+
 		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-		// Define the criteria how to select the locatioin provider -> use
-		// default
 		Criteria criteria = new Criteria();
 		provider = locationManager.getBestProvider(criteria, false);
 		Location location = locationManager.getLastKnownLocation(provider);
-
-		// Initialize the location fields
 		if (location != null) {
-			System.out.println("Provider " + provider + " has been selected.");
 			onLocationChanged(location);
 		} else {
 			lat.setText("Location not available");
@@ -78,18 +73,16 @@ public class Calculator extends Activity implements LocationListener {
 
 	@Override
 	public void onProviderDisabled(String arg0) {
-	    Toast.makeText(this, "Disabled provider " + provider,
-	            Toast.LENGTH_SHORT).show();
+		Toast.makeText(this, "Disabled provider " + provider, Toast.LENGTH_SHORT).show();
 	}
 
 	@Override
 	public void onProviderEnabled(String arg0) {
-		Toast.makeText(this, "Enabled new provider " + provider,
-		        Toast.LENGTH_SHORT).show();
+		Toast.makeText(this, "Enabled new provider " + provider, Toast.LENGTH_SHORT).show();
 	}
 
 	@Override
 	public void onStatusChanged(String arg0, int arg1, Bundle arg2) {
-		//no-op
+		// no-op
 	}
 }
