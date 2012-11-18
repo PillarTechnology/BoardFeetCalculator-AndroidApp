@@ -6,6 +6,7 @@ import static org.mockito.Mockito.when;
 import junit.framework.TestCase;
 import android.text.Editable;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.EditText;
 
 import com.pillar.boardfeetcalculator.Calculator;
