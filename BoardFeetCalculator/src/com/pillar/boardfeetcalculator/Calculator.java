@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView.OnEditorActionListener;
 
@@ -25,6 +26,7 @@ public class Calculator extends Activity {
 		((EditText) findViewById(R.id.editCircumference)).setOnEditorActionListener(listener);
 		((EditText) findViewById(R.id.editHeight)).setOnEditorActionListener(listener);
 		optionDelegate = new CalculatorOptionDelegate(new IntentFactory(), this);
+		enableSaveButton(false);
 	}
 
 	@Override
@@ -37,4 +39,11 @@ public class Calculator extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		return optionDelegate.onOptionItemSelected(item) ? true : super.onOptionsItemSelected(item);
 	}
+	
+	public void enableSaveButton(boolean enable) {
+		Button saveButton = (Button)findViewById(R.id.buttonSave);
+		saveButton.setEnabled(enable);	
+		saveButton.setClickable(enable);
+	}
+
 }

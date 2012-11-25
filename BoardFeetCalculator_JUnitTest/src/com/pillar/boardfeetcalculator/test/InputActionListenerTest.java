@@ -108,4 +108,43 @@ public class InputActionListenerTest extends TestCase {
 	public void testOnEditorActionDisplaysResultWhenCalculationWrapperCalled() {
 		checkDisplayValueShouldOccur(CALCULATION_RESULT, VALID_INPUT_VALUE, VALID_INPUT_VALUE, EditorInfo.IME_ACTION_DONE);
 	}
+
+	private void checkSaveButtonBehavior(String expectedText, boolean enabled, String height, String circumference, int actionType) {
+		Calculator calculator = mock(Calculator.class);
+		EditText heightView = mock(EditText.class);
+		EditText circumferenceView = mock(EditText.class);
+		EditText boardFeetView = mock(EditText.class);
+		Editable circumferenceControl = mock(Editable.class);
+		Editable heightControl = mock(Editable.class);
+
+		when(calculator.findViewById(R.id.editHeight)).thenReturn(heightView);
+		when(calculator.findViewById(R.id.editCircumference)).thenReturn(circumferenceView);
+		when(calculator.findViewById(R.id.editBoardFeet)).thenReturn(boardFeetView);
+		when(heightView.getText()).thenReturn(heightControl);
+		when(circumferenceView.getText()).thenReturn(circumferenceControl);
+		when(heightControl.toString()).thenReturn(height);
+		when(circumferenceControl.toString()).thenReturn(circumference);
+
+		InputActionListener listener = new InputActionListener(calculator, bfCalculator, cdCalculator);
+
+		listener.onEditorAction(circumferenceView, actionType, null);
+
+		verify(boardFeetView).setText(expectedText);
+		verify(calculator).enableSaveButton(enabled);
+	}
+
+	public void testSaveButtonBehaviorIsDisabledWhenBoardFeetViewIsEmpty() {
+		checkSaveButtonBehavior(InputActionListener.EMPTY_MESSAGE, false, EMPTY_STRING, EMPTY_STRING, EditorInfo.IME_ACTION_NEXT);
+		checkSaveButtonBehavior(InputActionListener.EMPTY_MESSAGE, false, EMPTY_STRING, EMPTY_STRING, EditorInfo.IME_ACTION_DONE);
+	}
+
+	public void testSaveButtonBehaviorIsDisabledWhenBoardFeetViewResultsIsError() {
+		checkSaveButtonBehavior(InputActionListener.ERROR_MESSAGE, false, "2", "1", EditorInfo.IME_ACTION_NEXT);
+		checkSaveButtonBehavior(InputActionListener.ERROR_MESSAGE, false, "2", "1", EditorInfo.IME_ACTION_DONE);
+	}
+
+	public void testSaveButtonBehaviorIsEnabledWhenBoardFeetViewResultsIsValid() {
+		checkSaveButtonBehavior("38.12736512446372", true, "8", "40", EditorInfo.IME_ACTION_NEXT);
+		checkSaveButtonBehavior("38.12736512446372", true, "8", "40", EditorInfo.IME_ACTION_DONE);
+	}
 }
