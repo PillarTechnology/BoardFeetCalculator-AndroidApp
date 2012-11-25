@@ -44,6 +44,7 @@ public class InputActionListener implements OnEditorActionListener {
 			}
 		}
 		setBoardFeetTextValue(boardFeet);
+		enableSaveButton(boardFeet);
 		return false;
 	}
 
@@ -104,5 +105,12 @@ public class InputActionListener implements OnEditorActionListener {
 
 	private EditText getEditTextField(int editTextId) {
 		return (EditText) calculator.findViewById(editTextId);
+	}
+	
+	private void enableSaveButton(String boardFeetValue) {
+		boolean enable = true;
+		if((boardFeetValue == EMPTY_MESSAGE) || (boardFeetValue == ERROR_MESSAGE))
+			enable = false;
+		calculator.enableSaveButton(enable);
 	}
 }
