@@ -68,7 +68,8 @@ public class InputActionListener implements OnEditorActionListener {
 	
 	private void enableSaveButton(String boardFeetValue) {
 		boolean enable = true;
-		if((boardFeetValue == EMPTY_MESSAGE) || (boardFeetValue == ERROR_MESSAGE))
+		if ((boardFeetValue == EMPTY_MESSAGE)
+				|| (boardFeetValue == CalculationWrapper.ERROR_MESSAGE))
 			enable = false;
 		calculator.enableSaveButton(enable);
 	}
