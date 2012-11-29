@@ -109,14 +109,14 @@ public class InputActionListenerTest extends TestCase {
 		checkDisplayValueShouldOccur(CALCULATION_RESULT, VALID_INPUT_VALUE, VALID_INPUT_VALUE, EditorInfo.IME_ACTION_DONE);
 	}
 
-	private void checkSaveButtonBehavior(String expectedText, boolean enabled, String height, String circumference, int actionType,
-			CalculationWrapper wrapper) {
+	private void checkSaveButtonBehavior(String expectedText, boolean enabled, String height, String circumference, int actionType) {
 		Calculator calculator = mock(Calculator.class);
 		EditText heightView = mock(EditText.class);
 		EditText circumferenceView = mock(EditText.class);
 		EditText boardFeetView = mock(EditText.class);
 		Editable circumferenceControl = mock(Editable.class);
 		Editable heightControl = mock(Editable.class);
+		CalculationWrapper wrapper = mock(CalculationWrapper.class);
 
 		when(calculator.findViewById(R.id.editHeight)).thenReturn(heightView);
 		when(calculator.findViewById(R.id.editCircumference)).thenReturn(circumferenceView);
@@ -125,6 +125,7 @@ public class InputActionListenerTest extends TestCase {
 		when(circumferenceView.getText()).thenReturn(circumferenceControl);
 		when(heightControl.toString()).thenReturn(height);
 		when(circumferenceControl.toString()).thenReturn(circumference);
+		when(wrapper.runCalculation(anyString(), anyString())).thenReturn(expectedText);
 
 		InputActionListener listener = new InputActionListener(calculator, wrapper);
 
@@ -135,20 +136,17 @@ public class InputActionListenerTest extends TestCase {
 	}
 
 	public void testSaveButtonBehaviorIsDisabledWhenBoardFeetViewIsEmpty() {
-		CalculationWrapper wrapper = mock(CalculationWrapper.class);
-		checkSaveButtonBehavior(InputActionListener.EMPTY_MESSAGE, false, EMPTY_STRING, EMPTY_STRING, EditorInfo.IME_ACTION_NEXT, wrapper);
-		checkSaveButtonBehavior(InputActionListener.EMPTY_MESSAGE, false, EMPTY_STRING, EMPTY_STRING, EditorInfo.IME_ACTION_DONE, wrapper);
+		checkSaveButtonBehavior(InputActionListener.EMPTY_MESSAGE, false, EMPTY_STRING, EMPTY_STRING, EditorInfo.IME_ACTION_NEXT);
+		checkSaveButtonBehavior(InputActionListener.EMPTY_MESSAGE, false, EMPTY_STRING, EMPTY_STRING, EditorInfo.IME_ACTION_DONE);
 	}
 
 	public void testSaveButtonBehaviorIsDisabledWhenBoardFeetViewResultsIsError() {
-		CalculationWrapper wrapper = mock(CalculationWrapper.class);
-		checkSaveButtonBehavior(CalculationWrapper.ERROR_MESSAGE, false, "2", "1", EditorInfo.IME_ACTION_NEXT, wrapper);
-		checkSaveButtonBehavior(CalculationWrapper.ERROR_MESSAGE, false, "2", "1", EditorInfo.IME_ACTION_DONE, wrapper);
+		checkSaveButtonBehavior(CalculationWrapper.ERROR_MESSAGE, false, "2", "1", EditorInfo.IME_ACTION_NEXT);
+		checkSaveButtonBehavior(CalculationWrapper.ERROR_MESSAGE, false, "2", "1", EditorInfo.IME_ACTION_DONE);
 	}
 
 	public void testSaveButtonBehaviorIsEnabledWhenBoardFeetViewResultsIsValid() {
-		CalculationWrapper wrapper = mock(CalculationWrapper.class);
-		checkSaveButtonBehavior("38.12736512446372", true, "8", "40", EditorInfo.IME_ACTION_NEXT, wrapper);
-		checkSaveButtonBehavior("38.12736512446372", true, "8", "40", EditorInfo.IME_ACTION_DONE, wrapper);
+		checkSaveButtonBehavior("38.12736512446372", true, "8", "40", EditorInfo.IME_ACTION_NEXT);
+		checkSaveButtonBehavior("38.12736512446372", true, "8", "40", EditorInfo.IME_ACTION_DONE);
 	}
 }
