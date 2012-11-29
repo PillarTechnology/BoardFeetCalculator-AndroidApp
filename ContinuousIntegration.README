@@ -1,0 +1,9 @@
+I am starting the process of adding Continuous Integration support for the project.
+
+This will initially be a 'todo' list for me in order to keep track of required steps and 
+a running list of notes.
+
+1. setup required environment within Cloudbees... including the Android simulator for CI
+2. create service hook within GIT in order to trigger CI after a commit
+3. setup Jenkins job to compile/run tests on new code checkin... only pushing to 'PROD' after a successful compile/test phase
+4. etc.

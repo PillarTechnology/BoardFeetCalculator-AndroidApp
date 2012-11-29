@@ -1,6 +1,7 @@
 package com.pillar.boardfeetcalculator.test;
 
 import android.test.ActivityInstrumentationTestCase2;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -54,6 +55,42 @@ public class CalculatorTest extends ActivityInstrumentationTestCase2<Calculator>
 	public void testResultAreaExists() {
 		TextView textResult = (TextView) MainActivity.findViewById(R.id.textResult);
 		assertNotNull(textResult);
+	}
+
+	public void testSaveButtonExists() {
+		Button saveButton = (Button) MainActivity
+				.findViewById(com.pillar.boardfeetcalculator.R.id.buttonSave);
+		assertNotNull(saveButton);
+	}
+
+	public void testActivityCanDisableSaveButton() throws Throwable {
+		runTestOnUiThread(new Runnable() {
+			public void run() {
+				MainActivity.enableSaveButton(false);
+			}
+		});
+		Button saveButton = (Button) MainActivity
+				.findViewById(com.pillar.boardfeetcalculator.R.id.buttonSave);
+		assertNotNull(saveButton);
+		assertFalse("",saveButton.isClickable());
+	}
+
+	public void testActivityCanEnableSaveButton() throws Throwable {
+		runTestOnUiThread(new Runnable() {
+			public void run() {
+				MainActivity.enableSaveButton(true);
+			}
+		});
+		Button saveButton = (Button) MainActivity.findViewById(com.pillar.boardfeetcalculator.R.id.buttonSave);
+		assertNotNull(saveButton);
+		assertTrue("",saveButton.isClickable());
+	}
+
+	public void testInitialSaveButtonStateIsDisabled() {
+		Button saveButton = (Button) MainActivity
+				.findViewById(com.pillar.boardfeetcalculator.R.id.buttonSave);
+		assertNotNull(saveButton);
+		assertFalse("",saveButton.isClickable());
 	}
 
 }

@@ -9,4 +9,5 @@
     <string name="label_superfluous">TextView</string>
     <string name="photo_pref">Save with Photo</string>
     <string name="preferences">Preferences</string>
+    <string name="button_save">Save</string>
 </resources>
