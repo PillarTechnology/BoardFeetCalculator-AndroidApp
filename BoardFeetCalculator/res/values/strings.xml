@@ -9,4 +9,7 @@
     <string name="label_superfluous">TextView</string>
     <string name="label_latitude">Latitude</string>
     <string name="label_longitude">Longitude</string>
+    <string name="photo_pref">Save with Photo</string>
+    <string name="preferences">Preferences</string>
+    <string name="button_save">Save</string>
 </resources>
