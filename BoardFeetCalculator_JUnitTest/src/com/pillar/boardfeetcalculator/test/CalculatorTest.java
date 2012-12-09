@@ -6,7 +6,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.pillar.boardfeetcalculator.Calculator;
+import com.pillar.boardfeetcalculator.CurrentLocationListener;
 import com.pillar.boardfeetcalculator.R;
+
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 public class CalculatorTest extends ActivityInstrumentationTestCase2<Calculator> {
 	private Calculator MainActivity;
@@ -92,5 +98,5 @@ public class CalculatorTest extends ActivityInstrumentationTestCase2<Calculator>
 		assertNotNull(saveButton);
 		assertFalse("",saveButton.isClickable());
 	}
-
+	
 }

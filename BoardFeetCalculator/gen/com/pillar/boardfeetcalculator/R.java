@@ -25,15 +25,18 @@ public final class R {
         public static final int editBoardFeet=0x7f080008;
         public static final int editCircumference=0x7f080001;
         public static final int editHeight=0x7f080000;
-        public static final int menu_settings=0x7f08000a;
+        public static final int menu_settings=0x7f08000c;
+        public static final int text=0x7f08000b;
         public static final int textView1=0x7f080002;
         public static final int textView2=0x7f080003;
         public static final int textView3=0x7f080007;
         public static final int textView4=0x7f080006;
+        public static final int toast_layout_root=0x7f08000a;
     }
     public static final class layout {
         public static final int activity_calculator=0x7f030000;
         public static final int activity_calculatorsettings=0x7f030001;
+        public static final int toast_layout=0x7f030002;
     }
     public static final class menu {
         public static final int activity_calculator=0x7f070000;

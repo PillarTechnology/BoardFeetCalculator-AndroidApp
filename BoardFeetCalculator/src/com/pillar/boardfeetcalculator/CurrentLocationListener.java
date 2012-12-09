@@ -1,16 +1,11 @@
 package com.pillar.boardfeetcalculator;
 
 import com.pillar.boardfeetcalculator.Calculator;
-import com.pillar.boardfeetcalculator.R;
-
-import android.content.Context;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.location.LocationProvider;
 import android.os.Bundle;
-import android.widget.TextView;
-import android.widget.Toast;
 
 
 public class CurrentLocationListener implements LocationListener {
@@ -18,11 +13,15 @@ public class CurrentLocationListener implements LocationListener {
 	public static final String GPS_PROVIDER_NAME = LocationManager.GPS_PROVIDER;
 	public static final String NET_PROVIDER_NAME = LocationManager.NETWORK_PROVIDER;
 	public static final String UNKNOWN_STRING = "Unknown";
+	public static final String DISABLED_STRING = "disabled";
+	public static final String ENABLED_STRING = "enabled";
+	public static final String OUT_OF_SERVICE_STRING = "out of service";
+	public static final String UNAVAILABLE_STRING = "temporarily unavailable";
+	public static final String AVAILABLE_STRING = "available";
 	private long minUpdateTime = 1000;
 	private float minUpdateDistance = 1.0f;
 	private static final int TWO_MINUTES = 1000 * 60 * 2;
 	private Calculator calculator;
-	private TextView lat, lon;
 	private LocationManager locationManager = null;
 	private Location lastKnownLocation = null;
 
@@ -31,8 +30,6 @@ public class CurrentLocationListener implements LocationListener {
 		this.locationManager = locationManager;
 		this.minUpdateTime = minUpdateTime;
 		this.minUpdateDistance = minUpdateDistance;
-		lat = (TextView) calculator.findViewById(R.id.displayLatitude);
-		lon = (TextView) calculator.findViewById(R.id.displayLongitude);	
 
 	}
 	
@@ -55,19 +52,19 @@ public class CurrentLocationListener implements LocationListener {
 	public void onLocationChanged(Location location) {
 		if(isBetterLocation(location, lastKnownLocation)) {
 			lastKnownLocation = location;
-			lat.setText(Location.convert(location.getLatitude(), Location.FORMAT_SECONDS));
-			lon.setText(Location.convert(location.getLongitude(), Location.FORMAT_SECONDS));
+			calculator.setLocation(Location.convert(location.getLatitude(), Location.FORMAT_SECONDS),
+					Location.convert(location.getLongitude(), Location.FORMAT_SECONDS));
 		}
 	}
 
 	@Override
 	public void onProviderDisabled(String provider) {
-		showProviderFloatingMessage(provider, "disabled");
+		calculator.showProviderFloatingMessage(provider, DISABLED_STRING);
 	}
 
 	@Override
 	public void onProviderEnabled(String provider) {
-		showProviderFloatingMessage(provider, "enabled");
+		calculator.showProviderFloatingMessage(provider, ENABLED_STRING);
 	}
 
 	@Override
@@ -76,17 +73,17 @@ public class CurrentLocationListener implements LocationListener {
 		{
 			case LocationProvider.OUT_OF_SERVICE:
 			{
-				showProviderFloatingMessage(provider, "out of service");
+				calculator.showProviderFloatingMessage(provider, OUT_OF_SERVICE_STRING);
 				break;
 			}
 			case LocationProvider.TEMPORARILY_UNAVAILABLE:
 			{
-				showProviderFloatingMessage(provider, "temporarily unavailable");
+				calculator.showProviderFloatingMessage(provider, UNAVAILABLE_STRING);
 				break;
 			}
 			case LocationProvider.AVAILABLE:
 			{
-				showProviderFloatingMessage(provider, "available");
+				calculator.showProviderFloatingMessage(provider, AVAILABLE_STRING);
 				initializeListener();
 				break;
 			}
@@ -98,9 +95,9 @@ public class CurrentLocationListener implements LocationListener {
 			try {
 				locationManager.requestLocationUpdates(provider, minUpdateTime, minUpdateDistance, this);
 			} catch (IllegalArgumentException e) {	// if provider is null or doesn't exist on this device
-				showProviderFloatingMessage(provider, "not available in device");
+				calculator.showProviderFloatingMessage(provider, "not available in device");
 			} catch (SecurityException e) {			// if no suitable permission is present 
-				showProviderFloatingMessage(provider, "permission access not granted");
+				calculator.showProviderFloatingMessage(provider, "permission access not granted");
 			}
 		}
 	}
@@ -110,9 +107,9 @@ public class CurrentLocationListener implements LocationListener {
 		try {
 			lastLocation = locationManager.getLastKnownLocation(provider);
 		} catch (IllegalArgumentException e) {	// if provider is null or doesn't exist on this device
-			showProviderFloatingMessage(provider, "not available in device");
+			calculator.showProviderFloatingMessage(provider, "not available in device");
 		} catch (SecurityException e) {			// if no suitable permission is present 
-			showProviderFloatingMessage(provider, "permission access not granted");
+			calculator.showProviderFloatingMessage(provider, "permission access not granted");
 		}
 		if (displayResults) {
 			if (lastLocation != null) {
@@ -125,14 +122,9 @@ public class CurrentLocationListener implements LocationListener {
 	}
 	
 	public void showUnknownLocation() {
-		lat.setText(UNKNOWN_STRING);
-		lon.setText(UNKNOWN_STRING);
+		calculator.setLocation(UNKNOWN_STRING, UNKNOWN_STRING);
 	}
 	
-	public void showProviderFloatingMessage(String providerName, String message) {
-		Toast.makeText(calculator, providerName.toUpperCase() + " provider\n" + message, Toast.LENGTH_SHORT).show();
-	}
-
 	/** Determines whether one Location reading is better than the current Location fix
 	  * @param location  The new Location that you want to evaluate
 	  * @param currentBestLocation  The current Location fix, to which you want to compare the new one
