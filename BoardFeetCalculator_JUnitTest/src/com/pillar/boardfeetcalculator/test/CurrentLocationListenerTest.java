@@ -4,6 +4,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.times;
 import org.mockito.ArgumentMatcher;
 
@@ -19,7 +20,7 @@ import com.pillar.boardfeetcalculator.Calculator;
 import com.pillar.boardfeetcalculator.CurrentLocationListener;
 
 public class CurrentLocationListenerTest extends TestCase {
-	private static final long MIN_UPDATE_TIME = 1000;
+	private static final long MIN_UPDATE_TIME = 1;
 	private static final float MIN_UPDATE_DISTANCE = 1.0f;
 	private Calculator calculator;
 	private CurrentLocationListener listener;
@@ -74,6 +75,48 @@ public class CurrentLocationListenerTest extends TestCase {
 		setupTest(locMgr);
 		listener.getLastKnownLocation(CurrentLocationListener.GPS_PROVIDER_NAME, true);
 		verify(calculator, times(1)).setLocation("10:0:0", "10:0:0");
+		tearDownTest();
+	}
+	
+	public void testGetLastKnownLocationShowsToastMessageWhenProviderIsNotAvailableInDevice() {
+		LocationManager locMgr = mock(LocationManager.class);
+		when(locMgr.getLastKnownLocation(CurrentLocationListener.GPS_PROVIDER_NAME)).thenThrow(new IllegalArgumentException());
+		setupTest(locMgr);
+		listener.getLastKnownLocation(CurrentLocationListener.GPS_PROVIDER_NAME, true);
+		verify(calculator, times(1)).showProviderFloatingMessage(CurrentLocationListener.GPS_PROVIDER_NAME,
+				CurrentLocationListener.UNAVAILABLE_IN_DEVICE_STRING);
+		tearDownTest();
+	}
+	
+	public void testGetLastKnownLocationShowsToastMessageWhenThereIsNoSuitablePermission() {
+		LocationManager locMgr = mock(LocationManager.class);
+		when(locMgr.getLastKnownLocation(CurrentLocationListener.GPS_PROVIDER_NAME)).thenThrow(new SecurityException());
+		setupTest(locMgr);
+		listener.getLastKnownLocation(CurrentLocationListener.GPS_PROVIDER_NAME, true);
+		verify(calculator, times(1)).showProviderFloatingMessage(CurrentLocationListener.GPS_PROVIDER_NAME,
+				CurrentLocationListener.NO_PERMISSION_STRING);
+		tearDownTest();
+	}
+	
+	public void testRequestLocationUpdatesShowsToastMessageWhenProviderIsNotAvailableInDevice() {
+		LocationManager locMgr = mock(LocationManager.class);
+		setupTest(locMgr);
+		doThrow(new IllegalArgumentException()).when(locMgr).requestLocationUpdates(CurrentLocationListener.GPS_PROVIDER_NAME,
+				MIN_UPDATE_TIME, MIN_UPDATE_DISTANCE, listener);
+		listener.requestLocationUpdates(CurrentLocationListener.GPS_PROVIDER_NAME);
+		verify(calculator, times(1)).showProviderFloatingMessage(CurrentLocationListener.GPS_PROVIDER_NAME,
+				CurrentLocationListener.UNAVAILABLE_IN_DEVICE_STRING);
+		tearDownTest();
+	}
+	
+	public void testRequestLocationUpdatesShowsToastMessageWhenThereIsNoSuitablePermission() {
+		LocationManager locMgr = mock(LocationManager.class);
+		setupTest(locMgr);
+		doThrow(new SecurityException()).when(locMgr).requestLocationUpdates(CurrentLocationListener.GPS_PROVIDER_NAME,
+				MIN_UPDATE_TIME, MIN_UPDATE_DISTANCE, listener);
+		listener.requestLocationUpdates(CurrentLocationListener.GPS_PROVIDER_NAME);
+		verify(calculator, times(1)).showProviderFloatingMessage(CurrentLocationListener.GPS_PROVIDER_NAME,
+				CurrentLocationListener.NO_PERMISSION_STRING);
 		tearDownTest();
 	}
 	
@@ -132,6 +175,42 @@ public class CurrentLocationListenerTest extends TestCase {
 		listener.onStatusChanged(CurrentLocationListener.GPS_PROVIDER_NAME, LocationProvider.AVAILABLE, new Bundle());
 		verify(calculator, times(1)).showProviderFloatingMessage(CurrentLocationListener.GPS_PROVIDER_NAME,
 				CurrentLocationListener.AVAILABLE_STRING);
+		tearDownTest();
+	}
+	
+	public void testShowUnknownLocationCallsSetLocationWithCorrectArguments() {
+		LocationManager locMgr = mock(LocationManager.class);
+		setupTest(locMgr);
+		listener.showUnknownLocation();
+		verify(calculator, times(1)).setLocation(CurrentLocationListener.UNKNOWN_STRING, CurrentLocationListener.UNKNOWN_STRING);
+		tearDownTest();
+	}
+	
+	public void testOnLocationChangedSavesNewLocationWhenProvidedWithBetterValue() {
+		LocationManager locMgr = mock(LocationManager.class);
+		setupTest(locMgr);
+		Location location = new Location(CurrentLocationListener.GPS_PROVIDER_NAME);
+		location.setLatitude(-100.0);
+		location.setLongitude(-100.0);	
+		listener.onLocationChanged(location);
+		assertEquals(listener.getLastKnownLocation(),location);
+		verify(calculator, times(1)).setLocation("-100:0:0", "-100:0:0");
+		tearDownTest();
+	}
+	
+	public void testOnLocationChangedDoesntSaveNewLocationWhenProvidedWithWorseValue() {
+		LocationManager locMgr = mock(LocationManager.class);
+		setupTest(locMgr);
+		Location location1 = new Location(CurrentLocationListener.GPS_PROVIDER_NAME);
+		location1.setLatitude(100.0);
+		location1.setLongitude(100.0);	
+		listener.onLocationChanged(location1);
+		Location location2 = new Location(CurrentLocationListener.NET_PROVIDER_NAME);
+		location2.setLatitude(-200.0);
+		location2.setLongitude(90.0);	
+		listener.onLocationChanged(location2);
+		assertEquals(listener.getLastKnownLocation(),location1);
+		verify(calculator, times(0)).setLocation("-200:0:0", "90:0:0");
 		tearDownTest();
 	}
 	

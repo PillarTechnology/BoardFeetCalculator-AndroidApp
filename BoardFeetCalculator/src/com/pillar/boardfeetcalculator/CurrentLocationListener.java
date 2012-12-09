@@ -18,6 +18,8 @@ public class CurrentLocationListener implements LocationListener {
 	public static final String OUT_OF_SERVICE_STRING = "out of service";
 	public static final String UNAVAILABLE_STRING = "temporarily unavailable";
 	public static final String AVAILABLE_STRING = "available";
+	public static final String UNAVAILABLE_IN_DEVICE_STRING = "not available in device";
+	public static final String NO_PERMISSION_STRING = "permission access not granted";
 	private long minUpdateTime = 1000;
 	private float minUpdateDistance = 1.0f;
 	private static final int TWO_MINUTES = 1000 * 60 * 2;
@@ -46,6 +48,10 @@ public class CurrentLocationListener implements LocationListener {
 		if(locationManager == null) {
 			showUnknownLocation();
 		}
+	}
+	
+	public Location getLastKnownLocation() {
+		return lastKnownLocation;
 	}
 
 	@Override
@@ -95,9 +101,9 @@ public class CurrentLocationListener implements LocationListener {
 			try {
 				locationManager.requestLocationUpdates(provider, minUpdateTime, minUpdateDistance, this);
 			} catch (IllegalArgumentException e) {	// if provider is null or doesn't exist on this device
-				calculator.showProviderFloatingMessage(provider, "not available in device");
+				calculator.showProviderFloatingMessage(provider, UNAVAILABLE_IN_DEVICE_STRING);
 			} catch (SecurityException e) {			// if no suitable permission is present 
-				calculator.showProviderFloatingMessage(provider, "permission access not granted");
+				calculator.showProviderFloatingMessage(provider, NO_PERMISSION_STRING);
 			}
 		}
 	}
@@ -107,9 +113,9 @@ public class CurrentLocationListener implements LocationListener {
 		try {
 			lastLocation = locationManager.getLastKnownLocation(provider);
 		} catch (IllegalArgumentException e) {	// if provider is null or doesn't exist on this device
-			calculator.showProviderFloatingMessage(provider, "not available in device");
+			calculator.showProviderFloatingMessage(provider, UNAVAILABLE_IN_DEVICE_STRING);
 		} catch (SecurityException e) {			// if no suitable permission is present 
-			calculator.showProviderFloatingMessage(provider, "permission access not granted");
+			calculator.showProviderFloatingMessage(provider, NO_PERMISSION_STRING);
 		}
 		if (displayResults) {
 			if (lastLocation != null) {
