@@ -20,9 +20,9 @@ public class CurrentLocationListener implements LocationListener {
 	public static final String AVAILABLE_STRING = "available";
 	public static final String UNAVAILABLE_IN_DEVICE_STRING = "not available in device";
 	public static final String NO_PERMISSION_STRING = "permission access not granted";
-	private long minUpdateTime = 1000;
-	private float minUpdateDistance = 1.0f;
-	private static final int TWO_MINUTES = 1000 * 60 * 2;
+	public static final int TWO_MINUTES = 1000 * 60 * 2;
+	private long minUpdateTime;
+	private float minUpdateDistance;
 	private Calculator calculator;
 	private LocationManager locationManager = null;
 	private Location lastKnownLocation = null;
@@ -135,7 +135,7 @@ public class CurrentLocationListener implements LocationListener {
 	  * @param location  The new Location that you want to evaluate
 	  * @param currentBestLocation  The current Location fix, to which you want to compare the new one
 	  */
-	protected boolean isBetterLocation(Location location, Location currentBestLocation) {
+	public boolean isBetterLocation(Location location, Location currentBestLocation) {
 	    if (location == null) {
 	        // No location can never be better
 	        return false;
